@@ -24,7 +24,12 @@ func incrementCounter(w http.ResponseWriter, r *http.Request) {
 
 func main () {
   http.HandleFunc("/", echoString)
+
   http.HandleFunc("/increment", incrementCounter)
+
+  http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		http.ServeFile(w, r, r.URL.Path[1:])
+	})
 
   http.HandleFunc("/hi", func(w http.ResponseWriter, r *http.Request){
     fmt.Fprintf(w, "Hi")
